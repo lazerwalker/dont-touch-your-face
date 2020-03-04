@@ -117,326 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.ts":[function(require,module,exports) {
-var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
+})({"node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
 
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
-function startVideoStream() {
-  if (!navigator.mediaDevices.getUserMedia) return;
-  navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: "user"
-    }
-  }).then(function (stream) {
-    var video = document.querySelector("#webcam");
-    video.srcObject = stream;
-
-    video.onloadedmetadata = function (e) {
-      video.play();
-    };
-
-    startTesting(video);
-  }).catch(function (err) {
-    alert("An error has occurred loading your webcam feed. Try again, or maybe in a different browser?");
-  });
+  return bundleURL;
 }
 
-var testingTimeout;
-var timerTimeout;
-var secondsSinceLastTouch = 0;
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-function startTesting(video, interval) {
-  var _this = this;
-
-  if (interval === void 0) {
-    interval = 500;
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
   }
 
-  var title = document.getElementById("header");
-  var time = document.getElementById("time");
+  return '/';
+}
 
-  var loop = function loop() {
-    return __awaiter(_this, void 0, void 0, function () {
-      var blob, isTouching, audio;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , captureFrame(video)];
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
 
-          case 1:
-            blob = _a.sent();
-            return [4
-            /*yield*/
-            , checkFaceTouching(blob)];
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
 
-          case 2:
-            isTouching = _a.sent();
+function updateLink(link) {
+  var newLink = link.cloneNode();
 
-            if (isTouching) {
-              audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
-              audio.play();
-              document.body.classList.add("touching");
-              title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
-              secondsSinceLastTouch = -1;
-            } else {
-              document.body.classList.remove("touching");
-              title.innerText = "Don't Touch Your Face!";
-            }
-
-            testingTimeout = setTimeout(loop, interval);
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
+  newLink.onload = function () {
+    link.remove();
   };
 
-  var timerLoop = function timerLoop() {
-    secondsSinceLastTouch += 1;
-    var minutes = Math.floor(secondsSinceLastTouch / 60);
-    var seconds = (secondsSinceLastTouch % 60).toString().padStart(2, "0");
-    time.innerText = minutes + ":" + seconds;
-    timerTimeout = setTimeout(timerLoop, 1000);
-  };
-
-  loop();
-  timerLoop();
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
 }
 
-function stopTesting() {
-  clearTimeout(testingTimeout);
-  clearTimeout(timerTimeout);
-}
+var cssTimeout = null;
 
-function checkFaceTouching(blob) {
-  return __awaiter(this, void 0, Promise, function () {
-    var json, touching;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          return [4
-          /*yield*/
-          , imagePrediction(blob)];
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
 
-        case 1:
-          json = _a.sent();
-          if (!json.predictions) return [2
-          /*return*/
-          , undefined];
-          touching = json.predictions.find(function (p) {
-            return p.tagName === "touching-face";
-          });
-          if (!touching) return [2
-          /*return*/
-          , undefined];
-          return [2
-          /*return*/
-          , touching.probability > 0.1];
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
       }
-    });
-  });
+    }
+
+    cssTimeout = null;
+  }, 50);
 }
 
-function imagePrediction(blob) {
-  return __awaiter(this, void 0, Promise, function () {
-    var response;
-    return __generator(this, function (_a) {
-      switch (_a.label) {
-        case 0:
-          return [4
-          /*yield*/
-          , fetch("https://eastus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/4e0b5b08-57cc-4e4f-ad70-a868b1ba70ad/classify/iterations/Iteration1/image", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/octet-stream",
-              "Prediction-Key": "ce04b2c466a64e748584aa72f53415e6"
-            },
-            body: blob
-          })];
-
-        case 1:
-          response = _a.sent();
-          return [4
-          /*yield*/
-          , response.json()];
-
-        case 2:
-          return [2
-          /*return*/
-          , _a.sent()];
-      }
-    });
-  });
-}
-
-function captureFrame(video) {
-  return __awaiter(this, void 0, Promise, function () {
-    return __generator(this, function (_a) {
-      return [2
-      /*return*/
-      , new Promise(function (resolve, reject) {
-        var canvas = document.createElement("canvas");
-        canvas.width = 640;
-        canvas.height = 480;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height); //   return canvas.toDataURL("image/jpeg");
-
-        canvas.toBlob(function (blob) {
-          resolve(blob);
-        }, "image/jpeg");
-      })];
-    });
-  });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  startVideoStream();
-});
-},{}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel/src/builtins/bundle-url.js"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -640,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel/src/builtins/hmr-runtime.js","src/index.ts"], null)
-//# sourceMappingURL=/src.f10117fe.js.map
+},{}]},{},["node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map

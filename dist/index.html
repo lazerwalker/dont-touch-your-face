@@ -5,13 +5,38 @@
     <title>Don't Touch Your Face</title>
 
     <script src="/src.f10117fe.js"></script>
+
+    <style>body {
+        font-family: Helvetica, sans-serif;
+        text-align: center;
+      }
+
+      body.touching {
+        color: white;
+      }
+
+      #header {
+        padding-top: 20px;
+      }
+
+      body.touching #shade {
+        background-color: red;
+        opacity: 0.8;
+        width: 100vw;
+        height: 100vh;
+      }</style>
   </head>
   <body>
-    <h1>Don't Touch Your Face</h1>
-    <video id="webcam">
+    <div id="shade">
+    <h1 id="header">Don't Touch Your Face</h1>
+    <video id="webcam"></video>
+    <h1>
+      It has been <span id="time">0:00</span> since you last touched your face
+    </h1>
     <div>
-      Built with the
-      <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier?">Azure Custom Vision Service</a>
+      Built by <a href="https://twitter.com/lazerwalker">@lazerwalker</a> with
+      the
+      <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier?">Azure Custom Vision Service</a>.
     </div>
-  </video></body>
+  </div></body>
 </html>

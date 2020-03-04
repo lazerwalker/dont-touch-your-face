@@ -18,22 +18,49 @@ function startVideoStream() {
 }
 
 let testingTimeout: number;
-function startTesting(video: HTMLVideoElement, interval: number = 100) {
+let timerTimeout: number;
+let secondsSinceLastTouch = 0;
+
+function startTesting(video: HTMLVideoElement, interval: number = 500) {
+  const title = document.getElementById("header");
+  const time = document.getElementById("time");
+
   const loop = async () => {
     const blob = await captureFrame(video);
     const isTouching = await checkFaceTouching(blob);
 
     if (isTouching) {
-      alert("Don't do that!");
+      const audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
+      audio.play();
+      document.body.classList.add("touching");
+      title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
+      secondsSinceLastTouch = -1;
+    } else {
+      document.body.classList.remove("touching");
+      title.innerText = "Don't Touch Your Face!";
     }
 
     testingTimeout = setTimeout(loop, interval);
   };
+
+  const timerLoop = () => {
+    secondsSinceLastTouch += 1;
+    const minutes = Math.floor(secondsSinceLastTouch / 60);
+    const seconds = ((secondsSinceLastTouch % 60).toString() as any).padStart(
+      2,
+      "0"
+    );
+    time.innerText = `${minutes}:${seconds}`;
+    timerTimeout = setTimeout(timerLoop, 1000);
+  };
+
   loop();
+  timerLoop();
 }
 
 function stopTesting() {
   clearTimeout(testingTimeout);
+  clearTimeout(timerTimeout);
 }
 
 async function checkFaceTouching(blob: Blob): Promise<boolean | undefined> {
