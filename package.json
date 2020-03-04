@@ -1,0 +1,19 @@
+{
+  "name": "dont-touch-your-face",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "homepage": "https://lazerwalker.com/dont-touch-your-face",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --public-url /dont-touch-your-face",
+    "deploy": "npm run build; gh-pages -d dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gh-pages": "^2.2.0",
+    "parcel": "^1.12.4",
+    "typescript": "^3.8.3"
+  }
+}
