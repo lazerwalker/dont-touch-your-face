@@ -39238,7 +39238,19 @@ function checkFaceTouching(video) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  startVideoStream();
+  document.getElementById("start").addEventListener("click", function () {
+    document.getElementById("start").hidden = true;
+    startVideoStream();
+  });
+
+  if (window.safari) {
+    var safari_1 = document.getElementById("safari-warning");
+    var safariClose = document.getElementById("close-safari");
+    safari_1.hidden = false;
+    safariClose.addEventListener("click", function () {
+      safari_1.hidden = true;
+    });
+  }
 });
 },{"./touchingDetector":"src/touchingDetector.ts"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
