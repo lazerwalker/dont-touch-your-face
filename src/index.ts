@@ -101,5 +101,18 @@ async function checkFaceTouching(
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  startVideoStream();
+  document.getElementById("start").addEventListener("click", () => {
+    document.getElementById("start").hidden = true;
+    startVideoStream();
+  });
+
+  if ((window as any).safari) {
+    const safari = document.getElementById("safari-warning");
+    const safariClose = document.getElementById("close-safari");
+
+    safari.hidden = false;
+    safariClose.addEventListener("click", () => {
+      safari.hidden = true;
+    });
+  }
 });

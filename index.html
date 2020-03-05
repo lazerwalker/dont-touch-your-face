@@ -55,7 +55,7 @@
 
       #debug-panel {
         position: absolute;
-        left: 40px;
+        left: 4%;
         top: 200px;
         text-align: left;
       }
@@ -66,6 +66,22 @@
 
       #debug-panel span {
         font-weight: bold;
+      }
+
+      #start {
+        font-size: 1.5em;
+        width: 200px;
+        height: 60px;
+      }
+
+      #safari-warning {
+        background-color: #cb4b16;
+        text-align: center;
+        margin: auto;
+        margin-bottom: 40px;
+        margin-top: 40px;
+
+        max-width: 1800px;
       }
     </style>
   </head>
@@ -78,6 +94,21 @@
       <div>Not Touching Face: <span id="chance-not-touching">0%</span></div>
     </div>
 
+    <div id="instructions">
+      <p>
+        Touching your face makes it more likely you'll contract COVID-19! <br />
+        Break the habit by letting us honk at you when you touch your face.
+      </p>
+
+      <p id="safari-warning" hidden="true">
+        It looks like you're using Safari! If you're not hearing any audio,
+        select the "Safari" menu, then "Settings for This Website". Set the
+        "Auto-Play" dropdown to "Allow All Auto-Play"
+        <a href="#" id="close-safari" role="button">[x]</a>
+      </p>
+
+      <button id="start">Start</button>
+    </div>
     <video id="webcam"></video>
     <h1>
       It has been <span id="time">0:00</span> since you last touched your face
@@ -95,6 +126,11 @@
         href="https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier?"
         >Azure Custom Vision Service</a
       >.
+
+      <p>
+        All processing happens in your web browser.<br />Your webcam data does
+        not leave your computer.
+      </p>
     </div>
   </body>
 </html>
