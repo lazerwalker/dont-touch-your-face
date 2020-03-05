@@ -41,7 +41,7 @@ function startTesting(video: HTMLVideoElement, interval: number = 200) {
     const now = new Date();
 
     if (isTouching) {
-      const audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
+      const audio = new Audio("audio/honk.mp3");
       audio.play();
       document.body.classList.add("touching");
       title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";

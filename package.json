@@ -6,7 +6,7 @@
   "homepage": "https://lazerwalker.com/dont-touch-your-face",
   "scripts": {
     "dev": "parcel index.html",
-    "build": "parcel build index.html --public-url /dont-touch-your-face",
+    "build": "parcel build index.html --public-url /dont-touch-your-face; cp -r model dist; cp -r audio dist;",
     "deploy": "npm run build; gh-pages -d dist"
   },
   "author": "",
