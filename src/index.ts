@@ -89,7 +89,7 @@ async function checkFaceTouching(
   console.log(result);
   return (
     result.chanceTouching > result.chanceNotTouching &&
-    result.chanceTouching >= 99
+    result.chanceTouching >= 80
   );
 }
 
