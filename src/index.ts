@@ -87,6 +87,13 @@ async function checkFaceTouching(
 ): Promise<boolean | undefined> {
   const result = await detect(video);
   console.log(result);
+
+  const touchingDebugLabel = document.getElementById("chance-touching");
+  const notTouchingDebugLabel = document.getElementById("chance-not-touching");
+
+  touchingDebugLabel.innerText = `${result.chanceTouching}%`;
+  notTouchingDebugLabel.innerText = `${result.chanceNotTouching}%`;
+
   return (
     result.chanceTouching > result.chanceNotTouching &&
     result.chanceTouching >= 80

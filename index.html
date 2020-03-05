@@ -12,6 +12,7 @@
         color: #fdf6e3;
         font-family: Helvetica, sans-serif;
         font-size: 1.3em;
+        position: relative;
         text-align: center;
       }
 
@@ -46,11 +47,37 @@
       #high-score.winning .celebration {
         display: inline;
       }
+
+      #webcam {
+        height: 480px;
+        width: 640px;
+      }
+
+      #debug-panel {
+        position: absolute;
+        left: 40px;
+        top: 200px;
+        text-align: left;
+      }
+
+      #debug-panel h2 {
+        text-align: center;
+      }
+
+      #debug-panel span {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
-    <div id="shade" />
     <h1 id="header">Don't Touch Your Face</h1>
+
+    <div id="debug-panel">
+      <h2>Debug</h2>
+      <div>Touching Face: <span id="chance-touching">0%</span></div>
+      <div>Not Touching Face: <span id="chance-not-touching">0%</span></div>
+    </div>
+
     <video id="webcam"></video>
     <h1>
       It has been <span id="time">0:00</span> since you last touched your face
