@@ -8,11 +8,21 @@
 
     <style>
       body {
+        background-color: #586e75;
+        color: #fdf6e3;
         font-family: Helvetica, sans-serif;
+        font-size: 1.3em;
         text-align: center;
       }
 
+      a {
+        color: #d5d5ee;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
       body.touching {
+        background-color: #cb4b16;
         color: white;
       }
 
@@ -20,11 +30,13 @@
         padding-top: 20px;
       }
 
-      body.touching #shade {
-        background-color: red;
-        opacity: 0.8;
-        width: 100vw;
-        height: 100vh;
+      #high-score {
+        font-size: 1.5em;
+        margin-bottom: 2em;
+      }
+
+      #high-score-time {
+        font-weight: bold;
       }
 
       #high-score .celebration {
@@ -32,7 +44,7 @@
       }
 
       #high-score.winning .celebration {
-        display: block;
+        display: inline;
       }
     </style>
   </head>
@@ -45,7 +57,7 @@
     </h1>
     <div id="high-score">
       <span class="celebration">🎉</span>
-      Your record is <span id="high-score-time">0:00</span>.
+      Your record is <span id="high-score-time">0:00</span>
       <span class="celebration">🎉</span>
     </div>
 
