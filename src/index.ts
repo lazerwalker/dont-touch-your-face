@@ -19,9 +19,9 @@ function startVideoStream() {
 
 let testingTimeout: number;
 let timerTimeout: number;
-let secondsSinceLastTouch = 0;
+let dateOfLastTouch = new Date();
 
-function startTesting(video: HTMLVideoElement, interval: number = 500) {
+function startTesting(video: HTMLVideoElement, interval: number = 200) {
   const title = document.getElementById("header");
   const time = document.getElementById("time");
 
@@ -29,33 +29,32 @@ function startTesting(video: HTMLVideoElement, interval: number = 500) {
     const blob = await captureFrame(video);
     const isTouching = await checkFaceTouching(blob);
 
+    const now = new Date();
+
     if (isTouching) {
       const audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
       audio.play();
       document.body.classList.add("touching");
       title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
-      secondsSinceLastTouch = -1;
+      dateOfLastTouch = now;
     } else {
       document.body.classList.remove("touching");
       title.innerText = "Don't Touch Your Face!";
     }
 
-    testingTimeout = setTimeout(loop, interval);
-  };
-
-  const timerLoop = () => {
-    secondsSinceLastTouch += 1;
-    const minutes = Math.floor(secondsSinceLastTouch / 60);
-    const seconds = ((secondsSinceLastTouch % 60).toString() as any).padStart(
+    const differenceInSeconds = Math.floor(
+      (now.getTime() - dateOfLastTouch.getTime()) / 1000
+    );
+    const minutes = Math.floor(differenceInSeconds / 60);
+    const seconds = ((differenceInSeconds % 60).toString() as any).padStart(
       2,
       "0"
     );
     time.innerText = `${minutes}:${seconds}`;
-    timerTimeout = setTimeout(timerLoop, 1000);
+    testingTimeout = setTimeout(loop, interval);
   };
 
   loop();
-  timerLoop();
 }
 
 function stopTesting() {
