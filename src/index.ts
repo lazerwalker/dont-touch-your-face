@@ -55,7 +55,7 @@ function startTesting(video: HTMLVideoElement, interval: number = 200) {
       (now.getTime() - dateOfLastTouch.getTime()) / 1000
     );
 
-    if (differenceInSeconds > highScoreInSeconds) {
+    if (differenceInSeconds >= highScoreInSeconds) {
       highScoreInSeconds = differenceInSeconds;
       highScore.classList.add("winning");
     } else {
