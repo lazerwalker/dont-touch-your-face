@@ -21,9 +21,15 @@ let testingTimeout: number;
 let timerTimeout: number;
 let dateOfLastTouch = new Date();
 
+let highScoreInSeconds: number = 0;
+let currentScoreIsHighScore: boolean = false;
+
 function startTesting(video: HTMLVideoElement, interval: number = 200) {
   const title = document.getElementById("header");
   const time = document.getElementById("time");
+
+  const highScore = document.getElementById("high-score");
+  const highScoreTime = document.getElementById("high-score-time");
 
   const loop = async () => {
     const blob = await captureFrame(video);
@@ -45,13 +51,20 @@ function startTesting(video: HTMLVideoElement, interval: number = 200) {
     const differenceInSeconds = Math.floor(
       (now.getTime() - dateOfLastTouch.getTime()) / 1000
     );
-    const minutes = Math.floor(differenceInSeconds / 60);
-    const seconds = ((differenceInSeconds % 60).toString() as any).padStart(
-      2,
-      "0"
-    );
-    time.innerText = `${minutes}:${seconds}`;
-    testingTimeout = setTimeout(loop, interval);
+
+    if (differenceInSeconds > highScoreInSeconds) {
+      currentScoreIsHighScore = true;
+      highScoreInSeconds = differenceInSeconds;
+      highScore.classList.add("winning");
+    } else {
+      currentScoreIsHighScore = false;
+      highScore.classList.remove("winning");
+    }
+
+    time.innerText = formatTime(differenceInSeconds);
+    testingTimeout = (setTimeout(loop, interval) as unknown) as number;
+
+    highScoreTime.innerText = formatTime(highScoreInSeconds);
   };
 
   loop();
@@ -60,6 +73,12 @@ function startTesting(video: HTMLVideoElement, interval: number = 200) {
 function stopTesting() {
   clearTimeout(testingTimeout);
   clearTimeout(timerTimeout);
+}
+
+function formatTime(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const printSecs = ((seconds % 60).toString() as any).padStart(2, "0");
+  return `${minutes}:${printSecs}`;
 }
 
 async function checkFaceTouching(blob: Blob): Promise<boolean | undefined> {

@@ -26,6 +26,14 @@
         width: 100vw;
         height: 100vh;
       }
+
+      #high-score .celebration {
+        display: none;
+      }
+
+      #high-score.winning .celebration {
+        display: block;
+      }
     </style>
   </head>
   <body>
@@ -35,6 +43,12 @@
     <h1>
       It has been <span id="time">0:00</span> since you last touched your face
     </h1>
+    <div id="high-score">
+      <span class="celebration">🎉</span>
+      Your record is <span id="high-score-time">0:00</span>.
+      <span class="celebration">🎉</span>
+    </div>
+
     <div>
       Built by <a href="https://twitter.com/lazerwalker">@lazerwalker</a> with
       the
