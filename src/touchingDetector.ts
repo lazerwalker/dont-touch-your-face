@@ -15,10 +15,6 @@ export async function detect(image: HTMLVideoElement) {
   const probabilities = result[0];
   if (!probabilities || probabilities.length !== 3) return;
 
-  const [
-    chanceNoFace,
-    chanceNotTouching,
-    chanceTouching
-  ] = probabilities.map(p => Math.floor(p * 100));
+  const [chanceNoFace, chanceNotTouching, chanceTouching] = probabilities;
   return { chanceNoFace, chanceTouching, chanceNotTouching };
 }
