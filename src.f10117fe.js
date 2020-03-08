@@ -38921,10 +38921,9 @@ var cvstfjs = __importStar(require("@microsoft/customvision-tfjs"));
 
 function detect(image) {
   return __awaiter(this, void 0, void 0, function () {
-    var model, result, probabilities, _a, chanceNoFace, chanceNotTouching, chanceTouching;
-
-    return __generator(this, function (_b) {
-      switch (_b.label) {
+    var model, result, probabilities, chanceNoFace, chanceNotTouching, chanceTouching;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
         case 0:
           model = new cvstfjs.ClassificationModel();
           return [4
@@ -38932,22 +38931,20 @@ function detect(image) {
           , model.loadModelAsync("model/model.json")];
 
         case 1:
-          _b.sent();
+          _a.sent();
 
           return [4
           /*yield*/
           , model.executeAsync(image)];
 
         case 2:
-          result = _b.sent();
+          result = _a.sent();
           console.log(result);
           probabilities = result[0];
           if (!probabilities || probabilities.length !== 3) return [2
           /*return*/
           ];
-          _a = probabilities.map(function (p) {
-            return Math.floor(p * 100);
-          }), chanceNoFace = _a[0], chanceNotTouching = _a[1], chanceTouching = _a[2];
+          chanceNoFace = probabilities[0], chanceNotTouching = probabilities[1], chanceTouching = probabilities[2];
           return [2
           /*return*/
           , {
@@ -39234,7 +39231,7 @@ function checkFaceTouching(video) {
           notTouchingDebugLabel.innerText = result.chanceNotTouching + "%";
           return [2
           /*return*/
-          , result.chanceNotTouching == 0];
+          , result.chanceNotTouching === 0];
       }
     });
   });
