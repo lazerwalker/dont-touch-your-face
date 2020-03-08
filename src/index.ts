@@ -28,7 +28,7 @@ let dateOfLastTouch = new Date();
 
 let highScoreInSeconds: number = 0;
 
-function startTesting(video: HTMLVideoElement, interval: number = 200) {
+function startTesting(video: HTMLVideoElement, interval: number = 100) {
   const title = document.getElementById("header");
   const time = document.getElementById("time");
 
