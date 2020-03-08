@@ -38943,7 +38943,7 @@ function detect(image) {
           result = _b.sent();
           console.log(result);
           probabilities = result[0];
-          if (!probabilities || probabilities.length !== 2) return [2
+          if (!probabilities || probabilities.length !== 3) return [2
           /*return*/
           ];
           _a = probabilities.map(function (p) {
