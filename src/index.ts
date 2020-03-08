@@ -94,10 +94,7 @@ async function checkFaceTouching(
   touchingDebugLabel.innerText = `${result.chanceTouching}%`;
   notTouchingDebugLabel.innerText = `${result.chanceNotTouching}%`;
 
-  return (
-    result.chanceTouching > result.chanceNotTouching &&
-    result.chanceTouching >= 80
-  );
+  return result.chanceNotTouching == 0;
 }
 
 document.addEventListener("DOMContentLoaded", () => {

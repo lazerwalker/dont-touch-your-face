@@ -1,2 +1,3 @@
-not-touching-face
-touching-face
+no face present
+not touching face
+touching face
