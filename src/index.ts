@@ -86,6 +86,7 @@ async function checkFaceTouching(
   video: HTMLVideoElement
 ): Promise<boolean | undefined> {
   const result = await detect(video);
+  if (!result) return;
   console.log(result);
 
   const touchingDebugLabel = document.getElementById("chance-touching");
