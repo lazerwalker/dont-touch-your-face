@@ -13,7 +13,7 @@ export async function detect(image: HTMLVideoElement) {
   const result = await model.executeAsync(image);
   console.log(result);
   const probabilities = result[0];
-  if (!probabilities || probabilities.length !== 2) return;
+  if (!probabilities || probabilities.length !== 3) return;
 
   const [
     // chanceNoFace,
