@@ -39224,6 +39224,9 @@ function checkFaceTouching(video) {
 
         case 1:
           result = _a.sent();
+          if (!result) return [2
+          /*return*/
+          ];
           console.log(result);
           touchingDebugLabel = document.getElementById("chance-touching");
           notTouchingDebugLabel = document.getElementById("chance-not-touching");
