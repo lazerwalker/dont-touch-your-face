@@ -39145,7 +39145,7 @@ function startTesting(video, interval) {
   var _this = this;
 
   if (interval === void 0) {
-    interval = 200;
+    interval = 100;
   }
 
   var title = document.getElementById("header");
