@@ -2,7 +2,7 @@ import * as cvstfjs from "@microsoft/customvision-tfjs";
 
 /** Results normalized to 0-100 percentage chances */
 interface ClassificationResult {
-  // chanceNoFace: number;
+  chanceNoFace: number;
   chanceTouching: number;
   chanceNotTouching: number;
 }
