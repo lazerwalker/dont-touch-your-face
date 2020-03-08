@@ -38921,8 +38921,7 @@ var cvstfjs = __importStar(require("@microsoft/customvision-tfjs"));
 
 function detect(image) {
   return __awaiter(this, void 0, void 0, function () {
-    var model, result, probabilities, _a, // chanceNoFace,
-    chanceNotTouching, chanceTouching;
+    var model, result, probabilities, _a, chanceNoFace, chanceNotTouching, chanceTouching;
 
     return __generator(this, function (_b) {
       switch (_b.label) {
@@ -38948,10 +38947,11 @@ function detect(image) {
           ];
           _a = probabilities.map(function (p) {
             return Math.floor(p * 100);
-          }), chanceNotTouching = _a[0], chanceTouching = _a[1];
+          }), chanceNoFace = _a[0], chanceNotTouching = _a[1], chanceTouching = _a[2];
           return [2
           /*return*/
           , {
+            chanceNoFace: chanceNoFace,
             chanceTouching: chanceTouching,
             chanceNotTouching: chanceNotTouching
           }];
