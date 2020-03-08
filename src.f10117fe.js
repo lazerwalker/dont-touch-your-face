@@ -39231,7 +39231,7 @@ function checkFaceTouching(video) {
           notTouchingDebugLabel.innerText = result.chanceNotTouching + "%";
           return [2
           /*return*/
-          , result.chanceTouching > result.chanceNotTouching && result.chanceTouching >= 80];
+          , result.chanceNotTouching == 0];
       }
     });
   });
