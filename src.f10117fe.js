@@ -39136,7 +39136,10 @@ function startVideoStream() {
 var testingTimeout;
 var timerTimeout;
 var dateOfLastTouch = new Date();
-var highScoreInSeconds = 0;
+var highScoreInSeconds = 0; // TODO: I think there should be a toggle for showing system alerts?
+
+var showAlerts = false;
+var alertIsVisible = false;
 
 function startTesting(video, interval) {
   var _this = this;
@@ -39169,7 +39172,14 @@ function startTesting(video, interval) {
               audio.play();
               document.body.classList.add("touching");
               title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
-              dateOfLastTouch = now;
+              dateOfLastTouch = now; // alert() calls are "blocking" within the current thread
+              // This is a very sloppy semaphore lock to try to stop us from piling up alerts.
+
+              if (showAlerts && !alertIsVisible) {
+                alertIsVisible = true;
+                alert("You touched your face!");
+                alertIsVisible = false;
+              }
             } else {
               document.body.classList.remove("touching");
               title.innerText = "Don't Touch Your Face!";
@@ -39280,7 +39290,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50860" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64165" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
