@@ -109,7 +109,7 @@ async function checkFaceTouching(
     1
   )}%`;
 
-  return result.chanceNotTouching < 0.002;
+  return result.chanceTouching > 0.01 && result.chanceNotTouching < 0.002;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
