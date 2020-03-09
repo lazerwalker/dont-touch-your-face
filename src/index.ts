@@ -28,6 +28,10 @@ let dateOfLastTouch = new Date();
 
 let highScoreInSeconds: number = 0;
 
+// TODO: I think there should be a toggle for showing system alerts?
+let showAlerts = false;
+let alertIsVisible = false;
+
 function startTesting(video: HTMLVideoElement, interval: number = 100) {
   const title = document.getElementById("header");
   const time = document.getElementById("time");
@@ -46,6 +50,14 @@ function startTesting(video: HTMLVideoElement, interval: number = 100) {
       document.body.classList.add("touching");
       title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
       dateOfLastTouch = now;
+
+      // alert() calls are "blocking" within the current thread
+      // This is a very sloppy semaphore lock to try to stop us from piling up alerts.
+      if (showAlerts && !alertIsVisible) {
+        alertIsVisible = true;
+        alert("You touched your face!");
+        alertIsVisible = false;
+      }
     } else {
       document.body.classList.remove("touching");
       title.innerText = "Don't Touch Your Face!";
