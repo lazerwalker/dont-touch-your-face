@@ -39241,7 +39241,7 @@ function checkFaceTouching(video) {
           notTouchingDebugLabel.innerText = (result.chanceNotTouching * 100).toFixed(1) + "%";
           return [2
           /*return*/
-          , result.chanceNotTouching < 0.002];
+          , result.chanceTouching > 0.01 && result.chanceNotTouching < 0.002];
       }
     });
   });
@@ -39290,7 +39290,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64165" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59386" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
