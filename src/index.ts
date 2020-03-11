@@ -1,6 +1,8 @@
 import { detect } from "./touchingDetector";
 
 let currentAudio: string = "audio/honk.mp3";
+let audioLastPlayed: Date = new Date();
+let audioThrottle: number = 500;
 
 function startVideoStream() {
   if (!navigator.mediaDevices.getUserMedia) return;
@@ -25,6 +27,13 @@ function startVideoStream() {
 }
 
 function playAudio() {
+  const now = new Date();
+  const differenceInMS = Math.floor(now.getTime() - audioLastPlayed.getTime());
+
+  if (differenceInMS < audioThrottle) return;
+
+  audioLastPlayed = now;
+
   const audio = new Audio(currentAudio);
   audio.play();
 }
