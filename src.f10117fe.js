@@ -39110,6 +39110,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var touchingDetector_1 = require("./touchingDetector");
 
+var currentAudio = "audio/honk.mp3";
+
 function startVideoStream() {
   if (!navigator.mediaDevices.getUserMedia) return;
   navigator.mediaDevices.getUserMedia({
@@ -39133,12 +39135,16 @@ function startVideoStream() {
   });
 }
 
+function playAudio() {
+  var audio = new Audio(currentAudio);
+  audio.play();
+}
+
 var testingTimeout;
 var timerTimeout;
 var dateOfLastTouch = new Date();
 var highScoreInSeconds = 0; // TODO: I think there should be a toggle for showing system alerts?
 
-var showAlerts = false;
 var alertIsVisible = false;
 
 function startTesting(video, interval) {
@@ -39155,7 +39161,7 @@ function startTesting(video, interval) {
 
   var loop = function loop() {
     return __awaiter(_this, void 0, void 0, function () {
-      var isTouching, now, audio, differenceInSeconds;
+      var isTouching, now, showAlerts, differenceInSeconds;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -39168,12 +39174,14 @@ function startTesting(video, interval) {
             now = new Date();
 
             if (isTouching) {
-              audio = new Audio("audio/honk.mp3");
-              audio.play();
+              if (document.getElementById("play-sound").checked) {
+                playAudio();
+              }
+
               document.body.classList.add("touching");
               title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
-              dateOfLastTouch = now; // alert() calls are "blocking" within the current thread
-              // This is a very sloppy semaphore lock to try to stop us from piling up alerts.
+              dateOfLastTouch = now;
+              showAlerts = document.getElementById("show-alert").checked;
 
               if (showAlerts && !alertIsVisible) {
                 alertIsVisible = true;
@@ -39261,6 +39269,15 @@ document.addEventListener("DOMContentLoaded", function () {
       safari_1.hidden = true;
     });
   }
+
+  document.querySelectorAll("input.sfx").forEach(function (el) {
+    el.addEventListener("change", function (e) {
+      var value = e.target.value;
+      console.log("Setting value", value);
+      currentAudio = value;
+      playAudio();
+    });
+  });
 });
 },{"./touchingDetector":"src/touchingDetector.ts"}],"node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -39290,7 +39307,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57268" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49709" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
