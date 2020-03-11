@@ -39111,6 +39111,8 @@ Object.defineProperty(exports, "__esModule", {
 var touchingDetector_1 = require("./touchingDetector");
 
 var currentAudio = "audio/honk.mp3";
+var audioLastPlayed = new Date();
+var audioThrottle = 500;
 
 function startVideoStream() {
   if (!navigator.mediaDevices.getUserMedia) return;
@@ -39136,6 +39138,10 @@ function startVideoStream() {
 }
 
 function playAudio() {
+  var now = new Date();
+  var differenceInMS = Math.floor(now.getTime() - audioLastPlayed.getTime());
+  if (differenceInMS < audioThrottle) return;
+  audioLastPlayed = now;
   var audio = new Audio(currentAudio);
   audio.play();
 }
