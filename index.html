@@ -53,18 +53,30 @@
         width: 640px;
       }
 
-      #debug-panel {
-        position: absolute;
-        left: 4%;
-        top: 200px;
-        text-align: left;
+      #options {
+        margin-bottom: 40px;
       }
 
-      #debug-panel h2 {
+      #options strong {
+        margin-bottom: 0.8em;
+      }
+
+      #debug-panel {
+        position: absolute;
+        left: 30%;
+        top: 200px;
+        text-align: left;
+
+        display: none;
+      }
+
+      #debug-panel h2,
+      #options h2 {
         text-align: center;
       }
 
-      #debug-panel span {
+      #debug-panel span,
+      #options span {
         font-weight: bold;
       }
 
@@ -83,6 +95,45 @@
 
         max-width: 1800px;
       }
+
+      input {
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      input,
+      label {
+        line-height: 1.5em;
+      }
+
+      @media only screen and (min-width: 1800px) {
+        #options {
+          position: absolute;
+          right: 10%;
+          top: 220px;
+          width: 400px;
+          text-align: left;
+        }
+      }
+
+      @media only screen and (min-width: 1200px) and (max-width: 1800px) {
+        video {
+          float: left;
+          margin-left: 40px;
+          margin-bottom: 40px;
+        }
+        #options {
+          position: absolute;
+          top: 200px;
+          right: 40px;
+          width: 400px;
+          text-align: left;
+        }
+
+        h1 {
+          clear: both;
+        }
+      }
     </style>
   </head>
   <body>
@@ -97,7 +148,9 @@
     <div id="instructions">
       <p>
         Touching your face makes it more likely you'll contract COVID-19! <br />
-        Break the habit by letting us honk at you when you touch your face.
+        Break the habit by letting us honk at you when you touch your face.<br />
+        You can run this in the background, but it needs to be in its own window
+        rather than a tab.
       </p>
 
       <p id="safari-warning" hidden="true">
@@ -110,6 +163,7 @@
       <button id="start">Start</button>
     </div>
     <video id="webcam"></video>
+
     <h1>
       It has been <span id="time">0:00</span> since you last touched your face
     </h1>
@@ -117,6 +171,69 @@
       <span class="celebration">🎉</span>
       Your record is <span id="high-score-time">0:00</span>
       <span class="celebration">🎉</span>
+    </div>
+
+    <div id="options">
+      <h2>Options</h2>
+      <div>
+        <h3>When you touch your face:</h3>
+
+        <div>
+          <input type="checkbox" id="play-sound" checked />
+          <label for="play-sound">Play A Loud Sound</label> <br />
+
+          <input type="checkbox" id="show-alert" />
+          <label for="show-alert">Trigger A System Alert</label><br />This will
+          bring this window to the foreground, even if it wasn't visible before.
+        </div>
+
+        <h3>Sound Effect:</h3>
+
+        <div>
+          <input
+            type="radio"
+            class="sfx"
+            id="honk"
+            name="sfx"
+            value="audio/honk.mp3"
+            checked
+          />
+          <label for="honk">Honk</label>
+        </div>
+
+        <div>
+          <input
+            type="radio"
+            class="sfx"
+            id="no"
+            name="sfx"
+            value="audio/no.mp3"
+          />
+          <label for="no">No</label>
+        </div>
+
+        <div>
+          <input
+            type="radio"
+            class="sfx"
+            id="error"
+            name="sfx"
+            value="audio/error.mp3"
+          />
+          <label for="error">Windows XP Error</label>
+        </div>
+
+        <div>
+          <input
+            type="radio"
+            class="sfx"
+            id="ohno"
+            name="sfx"
+            value="audio/ohno.mp3"
+          />
+          <label for="ohno">Oh No</label>
+        </div>
+      </div>
     </div>
 
     <div>

@@ -1,5 +1,7 @@
 import { detect } from "./touchingDetector";
 
+let currentAudio: string = "audio/honk.mp3";
+
 function startVideoStream() {
   if (!navigator.mediaDevices.getUserMedia) return;
   navigator.mediaDevices
@@ -22,6 +24,11 @@ function startVideoStream() {
     });
 }
 
+function playAudio() {
+  const audio = new Audio(currentAudio);
+  audio.play();
+}
+
 let testingTimeout: number;
 let timerTimeout: number;
 let dateOfLastTouch = new Date();
@@ -29,7 +36,6 @@ let dateOfLastTouch = new Date();
 let highScoreInSeconds: number = 0;
 
 // TODO: I think there should be a toggle for showing system alerts?
-let showAlerts = false;
 let alertIsVisible = false;
 
 function startTesting(video: HTMLVideoElement, interval: number = 100) {
@@ -45,14 +51,18 @@ function startTesting(video: HTMLVideoElement, interval: number = 100) {
     const now = new Date();
 
     if (isTouching) {
-      const audio = new Audio("audio/honk.mp3");
-      audio.play();
+      if ((document.getElementById("play-sound") as HTMLInputElement).checked) {
+        playAudio();
+      }
       document.body.classList.add("touching");
       title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
       dateOfLastTouch = now;
 
       // alert() calls are "blocking" within the current thread
       // This is a very sloppy semaphore lock to try to stop us from piling up alerts.
+      const showAlerts = (document.getElementById(
+        "show-alert"
+      ) as HTMLInputElement).checked;
       if (showAlerts && !alertIsVisible) {
         alertIsVisible = true;
         alert("You touched your face!");
@@ -127,4 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
       safari.hidden = true;
     });
   }
+
+  document.querySelectorAll("input.sfx").forEach(el => {
+    el.addEventListener("change", e => {
+      const value = (e.target as HTMLInputElement).value;
+      console.log("Setting value", value);
+      currentAudio = value;
+      playAudio();
+    });
+  });
 });
