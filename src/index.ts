@@ -3,88 +3,49 @@ function startVideoStream() {
   navigator.mediaDevices
     .getUserMedia({ audio: false, video: { facingMode: "user" } })
     .then(function(stream) {
-      const video: HTMLVideoElement = document.querySelector("#webcam");
+      const video = document.getElementById("webcam") as HTMLVideoElement;
       video.srcObject = stream;
       video.onloadedmetadata = function(e) {
         video.play();
+        startTesting(video);
       };
-      startTesting(video);
     })
     .catch(function(err) {
       alert(
         "An error has occurred loading your webcam feed. Try again, or maybe in a different browser?"
       );
+      alert(err);
     });
 }
 
-let testingTimeout: number;
-let timerTimeout: number;
-let dateOfLastTouch = new Date();
+document.addEventListener("DOMContentLoaded", () => {
+  startVideoStream();
+});
 
-function startTesting(video: HTMLVideoElement, interval: number = 200) {
-  const title = document.getElementById("header");
-  const time = document.getElementById("time");
-
-  const loop = async () => {
-    const blob = await captureFrame(video);
-    const isTouching = await checkFaceTouching(blob);
-
-    const now = new Date();
-
-    if (isTouching) {
-      const audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
-      audio.play();
-      document.body.classList.add("touching");
-      title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
-      dateOfLastTouch = now;
-    } else {
-      document.body.classList.remove("touching");
-      title.innerText = "Don't Touch Your Face!";
+async function imagePrediction(blob: Blob): Promise<any> {
+  const response = await fetch(
+    "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/71df7f3a-fc78-4777-8290-3e7676d4a927/classify/iterations/Iteration1/image",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+        "Prediction-Key": "5b52d788fe7141d19081a3cff99fd9c0"
+      },
+      body: blob
     }
-
-    const differenceInSeconds = Math.floor(
-      (now.getTime() - dateOfLastTouch.getTime()) / 1000
-    );
-    const minutes = Math.floor(differenceInSeconds / 60);
-    const seconds = ((differenceInSeconds % 60).toString() as any).padStart(
-      2,
-      "0"
-    );
-    time.innerText = `${minutes}:${seconds}`;
-    testingTimeout = setTimeout(loop, interval);
-  };
-
-  loop();
-}
-
-function stopTesting() {
-  clearTimeout(testingTimeout);
-  clearTimeout(timerTimeout);
+  );
+  return await response.json();
 }
 
 async function checkFaceTouching(blob: Blob): Promise<boolean | undefined> {
   const json = await imagePrediction(blob);
   if (!json.predictions) return undefined;
 
-  const touching = json.predictions.find(p => p.tagName === "touching-face");
+  console.log(json);
+  const touching = json.predictions.find(p => p.tagName === "touching");
   if (!touching) return undefined;
 
   return touching.probability > 0.1;
-}
-
-async function imagePrediction(blob: Blob): Promise<any> {
-  const response = await fetch(
-    "https://eastus.api.cognitive.microsoft.com/customvision/v3.0/Prediction/4e0b5b08-57cc-4e4f-ad70-a868b1ba70ad/classify/iterations/Iteration1/image",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/octet-stream",
-        "Prediction-Key": "ce04b2c466a64e748584aa72f53415e6"
-      },
-      body: blob
-    }
-  );
-  return await response.json();
 }
 
 async function captureFrame(video: HTMLVideoElement): Promise<Blob> {
@@ -95,7 +56,6 @@ async function captureFrame(video: HTMLVideoElement): Promise<Blob> {
     var ctx = canvas.getContext("2d");
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    //   return canvas.toDataURL("image/jpeg");
 
     canvas.toBlob(blob => {
       resolve(blob);
@@ -103,6 +63,25 @@ async function captureFrame(video: HTMLVideoElement): Promise<Blob> {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  startVideoStream();
-});
+function startTesting(video: HTMLVideoElement, interval: number = 100) {
+  const title = document.getElementById("header");
+
+  const loop = async () => {
+    const blob = await captureFrame(video);
+    const isTouching = await checkFaceTouching(blob);
+
+    if (isTouching) {
+      const audio = new Audio("https://uploads.lazerwalker.com/honk.mp3");
+      audio.play();
+      document.body.classList.add("touching");
+      title.innerText = "⚠️ YOU ARE TOUCHING YOUR FACE ⚠️";
+    } else {
+      document.body.classList.remove("touching");
+      title.innerText = "Don't Touch Your Face!";
+    }
+
+    setTimeout(loop, interval);
+  };
+
+  loop();
+}

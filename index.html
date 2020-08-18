@@ -4,8 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <title>Don't Touch Your Face</title>
 
-    <script src="src/index.ts"></script>
-
     <style>
       body {
         font-family: Helvetica, sans-serif;
@@ -14,34 +12,18 @@
 
       body.touching {
         color: white;
+        background-color: red;
       }
 
       #header {
         padding-top: 20px;
       }
-
-      body.touching #shade {
-        background-color: red;
-        opacity: 0.8;
-        width: 100vw;
-        height: 100vh;
-      }
     </style>
+
+    <script src="src/index.ts"></script>
   </head>
   <body>
-    <div id="shade" />
     <h1 id="header">Don't Touch Your Face</h1>
     <video id="webcam"></video>
-    <h1>
-      It has been <span id="time">0:00</span> since you last touched your face
-    </h1>
-    <div>
-      Built by <a href="https://twitter.com/lazerwalker">@lazerwalker</a> with
-      the
-      <a
-        href="https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier?"
-        >Azure Custom Vision Service</a
-      >.
-    </div>
   </body>
 </html>
