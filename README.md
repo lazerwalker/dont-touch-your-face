@@ -8,7 +8,7 @@ It's built using the [Azure Custom Vision Service](https://azure.microsoft.com/e
 
 If you're interested in a higher-level overview of how it functions and the various techniques I tried to train my ML model, I wrote a [blog post](https://medium.com/microsoftazure/how-you-can-use-computer-vision-to-avoid-touching-your-face-34a426ffddfd) explaining that journey.
 
-![image of the app when not touching your face](not-touching.jpeg) ![image of the app when touching your face](touching.jpeg)
+<img src="not-touching.jpeg" alt="image of the app when not touching your face" width="48%" /> <img src="touching.jpeg" alt="image of the app when touching your face" width="48%" />
 
 
 ## Setting up a development environment
