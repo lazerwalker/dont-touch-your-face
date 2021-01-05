@@ -4,7 +4,7 @@ This is a single-page web app that uses your webcam and a machine learning model
 
 A live version of this app can be found at https://lazerwalker.com/dont-touch-your-face
 
-It's built using the [Azure Custom Vision Service](https://azure.microsoft.com/en-us/services/cognitive-services/custom-vision-service/#features?WT.mc.id=code-github-emwalker). Using a TensorFlow.js model exported from Custom Vision, it runs entirely within the user's web browser; no webcam data leaves your computer.
+It's built using the [Azure Custom Vision Service](https://azure.microsoft.com/services/cognitive-services/custom-vision-service/?WT.mc.id=aiml-0000-emwalker&WT.mc_id=spatial-0000-emwalker#features). Using a TensorFlow.js model exported from Custom Vision, it runs entirely within the user's web browser; no webcam data leaves your computer.
 
 If you're interested in a higher-level overview of how it functions and the various techniques I tried to train my ML model, I wrote a [blog post](https://medium.com/microsoftazure/how-you-can-use-computer-vision-to-avoid-touching-your-face-34a426ffddfd) explaining that journey.
 
