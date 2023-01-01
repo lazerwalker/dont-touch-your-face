@@ -14,7 +14,7 @@
   "dependencies": {
     "@microsoft/customvision-tfjs": "^1.0.1",
     "gh-pages": "^2.2.0",
-    "parcel": "^1.12.4",
+    "parcel": "^2.8.2",
     "typescript": "^3.8.3"
   }
 }
